@@ -44,9 +44,32 @@ app = marimo.App(width="medium", sql_output="pandas")
 
 @app.cell
 def _():
+
     import marimo as mo
 
     return (mo,)
+
+
+@app.cell
+def _():
+    1+3
+    return
+
+
+@app.cell
+def _():
+    import random as rnd
+    num= rnd.randint(1,100)
+    a=-1
+    while a != num:
+        a = int(input("Guess a number between 1 and 100: "))
+        if a < num:
+            print("Too low")
+        elif a > num:
+            print("Too high")
+        else:
+            print("Correct!")
+    return
 
 
 @app.cell(hide_code=True)
