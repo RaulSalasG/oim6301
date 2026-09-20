@@ -44,7 +44,6 @@ app = marimo.App(width="medium", sql_output="pandas")
 
 @app.cell
 def _():
-
     import marimo as mo
 
     return (mo,)
@@ -69,6 +68,44 @@ def _():
             print("Too high")
         else:
             print("Correct!")
+    return
+
+
+@app.cell(hide_code=True)
+def _():
+    print(r"""
+    .==============================================.
+    |                                              |
+    |                           .'\                |
+    |                          //  ;               |
+    |                         /'   |               |
+    |        .----..._    _../ |   \              |
+    |         \'---._ `.-'      `  .'             |
+    |          `.    '              `.             |
+    |            :            _,.    '.            |
+    |            |     ,_    (() '    |            |
+    |            ;   .'(().  '      _/__..-        |
+    |            \ _ '       __  _.-'--._          |
+    |            ,'.'...____'::-'  \     `'        |
+    |           / |   /         .---.               |
+    |     .-.  '  '  / ,---.   (     )             |
+    |    / /       ,' (     )---`-`-`-.._           |
+    |   : '       /  '-`-`-`..........--'\          |
+    |   ' :      /  /                     '.        |
+    |   :  \    |  .'         o             \       |
+    |    \  '  .' /          o       .       '      |
+    |     \  `.|  :      ,    : _o--'.\      |      |
+    |      `. /  '       ))    (   )  \>     |      |
+    |        ;   |      ((      \ /    \___  |      |
+    |        ;   |      _))      `'.-'. ,-'` '      |
+    |        |    `.   ((`            |/    /       |
+    |        \     ).  .))            '    .        |
+    |     ----`-'-'  `''.::.________:::mx'' ---     |
+    |                                              |
+    |                                              |
+    |                                              |
+    '=============================================='
+    """)
     return
 
 
@@ -144,6 +181,30 @@ def _(mo):
     return
 
 
+@app.cell
+def _(freight_charges):
+    freight_charges[0]
+    return
+
+
+@app.cell
+def _(freight_charges):
+    len(freight_charges)
+    return
+
+
+@app.cell
+def _(total):
+    total
+    return
+
+
+@app.cell
+def _(freight_charges):
+    total=sum(freight_charges)
+    return (total,)
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
@@ -167,6 +228,17 @@ def _(mo):
     *If you delete a cell by mistake, `Ctrl+Z` will not bring it back: it only undoes
     typing inside one cell. Use the **undo** button at the bottom right, which stays
     there until you close the notebook, or `Ctrl+K` and search for undo.*
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    1. if i only run the first cell the other cells and their outputs stays the same, if i run all cells the outputs get updated based on the new execution
+    2. same as in number 1 but if we run all cells an error appears
+    3. depending on the order, the one that executes last will be the one that determines the final output shown.
+    4. if we erase the momery itll show an error
     """)
     return
 
@@ -232,6 +304,86 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
+    1. the last number
+    2. first 3 numbers
+    3. they are the first numbers?
+    4. 11
+    5. yes, yes
+    7. if is fron higest to lowest or lowest to highest, no
+    """)
+    return
+
+
+@app.cell
+def _(freight_charges):
+    freight_charges[-1]
+    return
+
+
+@app.cell
+def _(freight_charges):
+    freight_charges[:3]
+    return
+
+
+@app.cell
+def _(freight_charges):
+    freight_charges[0]
+    return
+
+
+@app.cell
+def _(orders):
+    orders[0]
+    return
+
+
+@app.cell
+def _():
+    a='confections'
+    len(a)
+    return
+
+
+@app.cell
+def _(orders):
+    sum(orders)
+    return
+
+
+@app.cell
+def _(orders):
+    orders*2
+    return
+
+
+@app.cell
+def _(freight_charges, orders):
+    orders+freight_charges
+    return
+
+
+@app.cell
+def _(freight_charges):
+    sorted(freight_charges)
+    return
+
+
+@app.cell
+def _(freight_charges):
+    sorted(freight_charges,reverse=True)
+    return
+
+
+@app.cell
+def _(freight_charges):
+    freight_charges
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
     # ▶️ What Type Is It
 
     Run the cell below. It asks Python what type each of four values is: a freight
@@ -272,6 +424,27 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
+    16.7522.25
+    error
+    """)
+    return
+
+
+@app.cell
+def _():
+    "16.75" + "22.25"
+    return
+
+
+@app.cell
+def _():
+    16.75 + "22.25"
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
     # ▶️ What Came Back
 
     The first line gives `'16.7522.25'`. Both values are text, so `+` joins them end to end.
@@ -300,6 +473,30 @@ def _(mo):
 
     📖 Handbook: Python §3 Expressions and operators
     """)
+    return
+
+
+@app.cell
+def _(freight_charges):
+    freight_charges[0]>20
+    return
+
+
+@app.cell
+def _(freight_charges):
+    freight_charges[-1]== max(freight_charges)
+    return
+
+
+@app.cell
+def _(freight_charges):
+    type(freight_charges[0]>20)
+    return
+
+
+@app.cell
+def _(freight_charges):
+    type(freight_charges[-1]== max(freight_charges))
     return
 
 
@@ -338,6 +535,12 @@ def _(mo):
 
     Your sentence should show `$120.50` and `$24.10`. If it does not, the experiments above left something changed: check that `freight_charges` still starts with `16.75` and that your `total` cell is still there.
     """)
+    return
+
+
+@app.cell
+def _(freight_charges):
+    print(f'total: ${sum(freight_charges):.2f} and average: ${sum(freight_charges)/len(freight_charges):.2f}')
     return
 
 
@@ -391,6 +594,28 @@ def _(mo):
     return
 
 
+@app.cell
+def _(freight_charges):
+    less_25=[]
+    for charge2 in freight_charges:
+        if charge2 <25:
+            less_25.append(charge2)
+    print(f'There are {len(less_25)} orders in the list')
+    print(less_25)
+    return
+
+
+@app.cell
+def _(freight_charges):
+    less_25_2=[]
+    for charge3 in freight_charges:
+        if charge3 <=25:
+            less_25_2.append(charge3)
+    print(f'There are {len(less_25_2)} orders in the list')
+    print(less_25_2)
+    return
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
@@ -432,12 +657,53 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
+    No module named 'pandsa'
+    theres a typo so it doesnt find the package we wnat to import
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    [Errno 2] No such file or directory: 'sales.csv'
+    the csv doesnt exist in our project so it doesnt find it.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    SyntaxError: '[' was never closed
+    we didnt close the list
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
     # 🙋 A Line That Does Not Break
 
     Write down what this gives, then run it in a cell of your own.
 
     `max(["9.50", "16.75", "22.25"])`
     """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    error
+    """)
+    return
+
+
+@app.cell
+def _():
+    max(["9.50", "16.75", "22.25"])
     return
 
 
@@ -490,6 +756,16 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
+    1. line number 3
+    2. number 1 because the error comes from a data in a list being a string
+    3. delete or replace the string with the correct data type
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
     # ✏️ The List as a Bar Chart
 
     > **Advanced.** Nothing later depends on this, and nothing asks you to do it.
@@ -513,6 +789,18 @@ def _(mo):
 
     The square brackets inside `_ax.bar(...)` are a **list comprehension**, which **iterates** over `orders` and turns each number into text.
     """)
+    return
+
+
+@app.cell
+def _(freight_charges, orders):
+    import matplotlib.pyplot as plt
+
+    _fig, _ax = plt.subplots(figsize=(6, 2.6))
+    _ax.bar([str(_o) for _o in orders], freight_charges)
+    _ax.set_ylabel("freight")
+    _fig
+
     return
 
 
