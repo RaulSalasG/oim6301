@@ -685,6 +685,24 @@ def _(mo):
     return
 
 
+@app.cell
+def _(first_order):
+    first_order["Freight"]
+    return
+
+
+@app.cell
+def _(first_order):
+    first_order["freight"]
+    return
+
+
+@app.cell
+def _(first_order):
+    first_order[0]
+    return
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
@@ -774,6 +792,37 @@ def _(mo):
     return
 
 
+@app.cell
+def _(orders):
+    t=0
+    for o in orders:
+        t=t+o['Freight']
+    print(t)
+    return
+
+
+@app.cell
+def _(orders):
+    ns=0
+    for o1 in orders:
+        if o1['ShippedDate'] is None:
+            ns=ns+1
+    print(f'Number of orders with no ShippedDate: {ns}')
+    return
+
+
+@app.cell
+def _(orders):
+    n=0
+    for o2 in orders:
+        if o2['Freight']>n:
+            n=o2['Freight']
+            id=o2['OrderID']
+
+    print(f'Order number {id} has the biggest freight which is {n}')
+    return
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
@@ -794,10 +843,15 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    *One row is ...*
+    Each row is an order placed by a customer, with the information needed to track its shipping process.
+    """)
+    return
 
-    *(Replace this line with your own sentence. If this cell shows you code instead of
-    text, use the cell menu to turn it into a markdown cell.)*
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    Yes, since each row is one distinct order, and there are 30 orders in the table.
     """)
     return
 
@@ -824,6 +878,23 @@ def _(mo):
     return
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    i would make a loop that for each row multiplies the number of shares by the price of each and then sum all the row results together to get the total portfolio value.
+    """)
+    return
+
+
+@app.cell
+def _(portfolio):
+    total_cost = 0
+    for holding in portfolio:
+        total_cost = total_cost + holding["Shares"] * holding["Price"]
+    print(f"Total cost: ${total_cost:.2f}")
+    return
+
+
 @app.cell
 def _():
     portfolio = [
@@ -835,6 +906,47 @@ def _():
         {"Symbol": "TSLA", "Shares": 150, "Price": 255.70},
     ]
     portfolio
+    return (portfolio,)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    # ✏️ Practice Problem · Inventory Reorder Cost
+
+    A small warehouse has six products below. Each one needs to be reordered up to its
+    `ReorderQty`, at its `UnitCost`.
+
+
+    **Write the code that calculates the total cost to reorder every product, but only
+    counting products where `InStock` is below 20.**
+
+    Check yourself: $339.00
+    """)
+    return
+
+
+@app.cell
+def _():
+    inventory = [
+        {"Product": "Pens", "InStock": 15, "ReorderQty": 100, "UnitCost": 0.45},
+        {"Product": "Notebooks", "InStock": 30, "ReorderQty": 50, "UnitCost": 2.10},
+        {"Product": "Staplers", "InStock": 8, "ReorderQty": 20, "UnitCost": 6.75},
+        {"Product": "Folders", "InStock": 12, "ReorderQty": 80, "UnitCost": 0.60},
+        {"Product": "Tape", "InStock": 25, "ReorderQty": 40, "UnitCost": 1.20},
+        {"Product": "Markers", "InStock": 5, "ReorderQty": 60, "UnitCost": 1.85},
+    ]
+    return (inventory,)
+
+
+@app.cell
+def _(inventory):
+    total=0
+    for i in inventory:
+        if i['InStock']<20:
+            total=total+(i['UnitCost']*i['ReorderQty'])
+    print(f'Total:{total}')
+        
     return
 
 
@@ -886,6 +998,25 @@ def _(mo):
         _where = f"could not write into {_data_dir.name}/: {_error}"
 
     _where
+    return (portfolio_csv,)
+
+
+@app.cell
+def _(portfolio_csv):
+    with open(portfolio_csv) as _file:
+        _lines = _file.readlines()
+
+    print(f"{'name':<6}{'shares':>8}{'price':>10}")
+    csv_total = 0
+    for _line in _lines[1:]:
+        _parts = _line.strip().split(",")
+        _name = _parts[0]
+        _shares = int(_parts[1])
+        _price = float(_parts[2])
+        print(f"{_name:<6}{_shares:>8}{_price:>10.2f}")
+        csv_total = csv_total + _shares * _price
+
+    print(f"Total cost: ${csv_total:.2f}")
     return
 
 
