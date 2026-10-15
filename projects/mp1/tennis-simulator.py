@@ -89,6 +89,7 @@ def _():
         number_of_matches,
         player_a,
         player_b,
+        random_seed,
         serve_win_percent_a,
         serve_win_percent_b,
     )
@@ -158,6 +159,7 @@ def _(random):
         return "A" if points_a > points_b else "B"
 
 
+
     def play_match(percent_a, percent_b):
         sets_a = 0
         sets_b = 0
@@ -168,23 +170,24 @@ def _(random):
             games_a = 0
             games_b = 0
 
-        
             while max(games_a, games_b) < 6 or abs(games_a - games_b) < 2:
                 if games_a == 6 and games_b == 6:
                     winner = play_tiebreak(server, percent_a, percent_b)
                 else:
                     winner = play_game(server, percent_a, percent_b)
-        
+
                 if winner == "A":
                     games_a += 1
                 else:
                     games_b += 1
-        
+
                 if server == "A":
                     server = "B"
                 else:
                     server = "A"
 
+                if games_a == 7 or games_b == 7:
+                    break
 
             scores.append((games_a, games_b))
 
@@ -193,7 +196,10 @@ def _(random):
             else:
                 sets_b += 1
 
-        return ("A", scores) if sets_a > sets_b else ("B", scores)
+        if sets_a > sets_b:
+            return "A", scores
+        else:
+            return "B", scores
 
 
     def simulate_many(percent_a, percent_b, matches):
@@ -221,14 +227,22 @@ def _(random):
 @app.cell
 def _(
     number_of_matches,
+    random,
+    random_seed,
     serve_win_percent_a,
     serve_win_percent_b,
     simulate_many,
 ):
+
+    random.seed(random_seed)
+
     wins_a, wins_b, examples = simulate_many(
-        serve_win_percent_a, serve_win_percent_b, number_of_matches)
+        serve_win_percent_a, serve_win_percent_b, number_of_matches
+    )
+
     chance_a = wins_a * 100 / number_of_matches
     chance_b = wins_b * 100 / number_of_matches
+
     return chance_a, chance_b, examples, wins_a, wins_b
 
 
@@ -264,7 +278,6 @@ def _(chance_a, chance_b, examples, player_a, player_b, wins_a, wins_b):
         print(f'{player_b} is more likely to win.')
     else:
         print('Both players have the same chance of winning.')
-
     return
 
 
@@ -294,6 +307,20 @@ def _(number_of_matches, simulate_many, wins_a, wins_b):
     print(a_wins == test_count)
     print(b2_wins == test_count)
     print(wins_a + wins_b == number_of_matches)
+    return
+
+
+@app.cell
+def _(examples):
+
+    correct_scores = True
+
+    for test_number, test_winner, test_sets in examples:
+        for games_a_test, games_b_test in test_sets:
+            if games_a_test > 7 or games_b_test > 7:
+                correct_scores = False
+
+    print(f'All set scores are valid: {correct_scores}')
 
     return
 
@@ -303,7 +330,11 @@ def _(mo):
     mo.md(r"""
     ## 7. Working With the Agent
 
-    AI helped with the organization of the code (suggesting to make it by running different functions inside other functions) and the tiebreak code.
+    AI suggested adding a tie-break system and initially provided a solution with several conditions to control which player was serving. I found this part confusing, especially the use of % 2 and % 4 to alternate serves.
+
+    I asked AI to explain how the serving order worked and why both conditions were necessary. After reviewing the explanation, I realized that the second condition was unnecessary, so I removed it and simplified the code using basic if statements.
+
+    This made the function easier for me to understand while keeping the correct serving order. The final version can be found in the play_tiebreak() function in Section 4.
     """)
     return
 
@@ -349,7 +380,6 @@ def _(
     print(f'{player_b}: {new_chance_b}%')
 
     print(f'Improvement for {player_a}: {round(new_chance_a - chance_a,2)} percentage points')
-
     return
 
 
