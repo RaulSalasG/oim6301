@@ -530,7 +530,7 @@ def _(holdings):
     for _symbol, _shares, _price in holdings:
         cost+= _shares * _price
     print(f"Total cost: {cost}")
-    
+
     return
 
 
@@ -865,6 +865,17 @@ def _(requests):
     wellesley_place = wellesley_reply.json()["results"][0]
     print(wellesley_place)
     wellesley_place["latitude"], wellesley_place["longitude"], wellesley_place["admin1"]
+    return
+
+
+@app.cell
+def _(requests):
+    latitude_reply = requests.get(
+        "https://api.open-meteo.com/v1/forecast?latitude=42.29649&longitude=-71.29256&current=temperature_2m",
+        timeout=10,
+    )
+    response=latitude_reply.json()
+    response['current'],response['current_units']
     return
 
 

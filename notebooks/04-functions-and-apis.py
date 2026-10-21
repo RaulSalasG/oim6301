@@ -408,6 +408,18 @@ def _(mo):
     return
 
 
+@app.cell
+def _(requests):
+    wellesley_reply = requests.get(
+        "https://geocoding-api.open-meteo.com/v1/search?name=Wellesley&count=1",
+        timeout=10,
+    )
+    wellesley_place = wellesley_reply.json()["results"][0]
+    print(wellesley_place)
+    wellesley_place["latitude"], wellesley_place["longitude"], wellesley_place["admin1"]
+    return
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
@@ -563,6 +575,18 @@ def _(mo):
 
     **Going further.** Post something more useful than one town's bill: choose a question somebody would ask, answer it from live data, and post the answer, in 140 characters or fewer.
     """)
+    return
+
+
+@app.cell
+def _(requests):
+    board_reply = requests.post(
+        "https://oim.zhili.dev/message",
+        headers={"x-token": "RaulSalasG"},
+        json={"message": f"Hi im Raul"},
+        timeout=10,
+    )
+    board_reply.status_code, board_reply.json()
     return
 
 
