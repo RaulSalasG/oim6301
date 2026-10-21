@@ -91,7 +91,7 @@ def _(mo):
 
 @app.cell
 def _(goog_quote):
-    "Currency" in goog_quote
+    "Volume" in goog_quote
     return
 
 
@@ -175,6 +175,61 @@ def _(mo):
 def _():
     closing_prices = {"AAPL": 260.81, "NVDA": 186.00, "MSFT": 404.88, "GOOG": 308.42}
     closing_prices
+    return (closing_prices,)
+
+
+@app.cell
+def _(closing_prices):
+    print(closing_prices["AAPL"])
+    return
+
+
+@app.cell
+def _(closing_prices):
+    print(closing_prices["TSLA"])
+    return
+
+
+@app.cell
+def _(closing_prices):
+    print(closing_prices.get("TSLA"))
+    return
+
+
+@app.cell
+def _(closing_prices):
+    above_200 = []
+
+    for ticker in closing_prices:
+        if closing_prices[ticker] > 200:
+            above_200.append(ticker)
+
+    above_200
+    return
+
+
+@app.cell
+def _(closing_prices):
+    highest_price = 0
+    highest_ticker = None
+
+    for ticker1 in closing_prices:
+        if closing_prices[ticker1] > highest_price:
+            highest_price = closing_prices[ticker1]
+            highest_ticker = ticker1
+
+    highest_ticker
+    return
+
+
+@app.cell
+def _(closing_prices):
+    new_prices = {}
+
+    for ticker2 in closing_prices:
+        new_prices[ticker2] = closing_prices[ticker2] * 1.10
+
+    new_prices
     return
 
 
@@ -202,6 +257,24 @@ def _():
         "Finland", "USA", "USA", "Germany", "France", "Austria", "Argentina", "Venezuela",
     ]
     len(ship_countries)
+    return (ship_countries,)
+
+
+@app.cell
+def _(ship_countries):
+    countries = {}
+    for c in ship_countries:
+        countries[c] = countries.get(c, 0) + 1
+
+    countries
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    France,Germany,Brazil,Usa
+    """)
     return
 
 
@@ -403,6 +476,17 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
+    1. List
+    2. Set
+    3. Dictionary
+    4. Tuple
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
     ## ✏️ D · The portfolio again
 
     Notebook 2 held the six holdings as a list of dictionaries. Here they are as a list of tuples, one holding per tuple.
@@ -419,6 +503,14 @@ def _(mo):
 
 
 @app.cell
+def _(mo):
+    mo.md(r"""
+    I prefer dictionaries, because I'm more used to them.
+    """)
+    return
+
+
+@app.cell
 def _():
     holdings = [
         ("AAPL", 100, 173.93),
@@ -429,6 +521,43 @@ def _():
         ("TSLA", 150, 255.70),
     ]
     holdings
+    return (holdings,)
+
+
+@app.cell
+def _(holdings):
+    cost=0
+    for _symbol, _shares, _price in holdings:
+        cost+= _shares * _price
+    print(f"Total cost: {cost}")
+    
+    return
+
+
+@app.cell
+def _(holdings):
+    total_cost = 0
+    for _symbol, _shares, _price in holdings:
+        total_cost += _shares * _price
+
+    f"${total_cost:,.2f}"
+    return
+
+
+@app.cell
+def _(holdings):
+    holding_costs = {}
+
+    for ticker3, quantity, price in holdings:
+        holding_costs[ticker3] = quantity * price
+    m=0
+
+    for i in holding_costs:
+        if holding_costs[i]>m:
+            m=holding_costs[i]
+            m1 = i
+
+    m, m1
     return
 
 
@@ -448,6 +577,14 @@ def _(mo):
     return
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    I keep a list of purchases with the number of shares and their prices. When shares are sold, I use the oldest shares first. I calculate the gain by subtracting the buying price from the selling price and multiplying by the number of shares sold. Then I update the remaining shares.
+    """)
+    return
+
+
 @app.cell
 def _():
     year_trades = [
@@ -461,6 +598,82 @@ def _():
         ("2026-08-12", "AAPL", "sell", 40, 250.00),
     ]
     year_trades
+    return (year_trades,)
+
+
+@app.cell
+def _(year_trades):
+    inventory = {}
+    profit = 0
+    sales = []
+
+    for date, ticker4, action, quantity2, price2 in year_trades:
+        if ticker4 not in inventory:
+            inventory[ticker4] = []
+
+        if action == "buy":
+            inventory[ticker4].append([price2, quantity2])
+
+        else:
+            remaining = quantity2
+            profitnow = 0
+
+            while remaining > 0:
+                old_price, old_quantity = inventory[ticker4][0]
+
+                sold = min(remaining, old_quantity)
+                profitnow += (price2 - old_price) * sold
+
+                remaining -= sold
+                inventory[ticker4][0][1] -= sold
+
+                if inventory[ticker4][0][1] == 0:
+                    inventory[ticker4].pop(0)
+
+            profit += profitnow
+            sales.append((date, ticker4, profitnow))
+
+    print(f'profit:{profit}')
+    print('sales:')
+    for sale in sales:
+        print(f'date:{sale[0]}, ticker:{sale[1]}, profit:{sale[2]}')
+    print('inventory remaining:')
+    print(inventory)
+    return
+
+
+@app.cell
+def _(year_trades):
+    inventory_avg = {}
+    profit_avg = 0
+    sales_avg = []
+
+    for date_avg, ticker5, action_avg, quantity5, price5 in year_trades:
+        if ticker5 not in inventory_avg:
+            inventory_avg[ticker5] = [0, 0]
+
+        if action_avg == "buy":
+            old_quantity_avg = inventory_avg[ticker5][1]
+            old_price_avg = inventory_avg[ticker5][0]
+
+            new_quantity_avg = old_quantity_avg + quantity5
+            new_price_avg = (old_price_avg * old_quantity_avg + price5 * quantity5) / new_quantity_avg
+
+            inventory_avg[ticker5] = [new_price_avg, new_quantity_avg]
+
+        else:
+            profitnow_avg = (price5 - inventory_avg[ticker5][0]) * quantity5
+            profit_avg = profit_avg + profitnow_avg
+            inventory_avg[ticker5][1] -= quantity5
+
+            sales_avg.append((date_avg, ticker5, profitnow_avg))
+
+    print(f'profit:{profit_avg}')
+    print('sales:')
+    for sale_avg in sales_avg:
+        print(f'date:{sale_avg[0]}, ticker:{sale_avg[1]}, profit:{sale_avg[2]}')
+    print('inventory remaining:')
+    print(inventory_avg)
     return
 
 
@@ -644,7 +857,14 @@ def _(babson_weather):
 
 
 @app.cell
-def _():
+def _(requests):
+    wellesley_reply = requests.get(
+        "https://geocoding-api.open-meteo.com/v1/search?name=Wellesley&count=1",
+        timeout=10,
+    )
+    wellesley_place = wellesley_reply.json()["results"][0]
+    print(wellesley_place)
+    wellesley_place["latitude"], wellesley_place["longitude"], wellesley_place["admin1"]
     return
 
 
@@ -658,6 +878,26 @@ def _(mo):
     return
 
 
+@app.cell
+def _(requests):
+    wellesley_reply1 = requests.get(
+        "https://geocoding-api.open-meteo.com/v1/search?name=Babson Park&count=1",
+        timeout=10,
+    )
+    wellesley_place1 = wellesley_reply1.json()["results"][0]
+    print(wellesley_place1)
+    wellesley_place1["admin1"]
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    Florida, It would have silently picked the wrong town, with no error to warn me
+    """)
+    return
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
@@ -666,11 +906,54 @@ def _(mo):
     return
 
 
+@app.cell
+def _(requests):
+    url_week = "https://api.open-meteo.com/v1/forecast?latitude=42.2968&longitude=-71.2924&daily=temperature_2m_max,temperature_2m_min&timezone=America%2FNew_York"
+
+    response_week = requests.get(url_week)
+    data_week = response_week.json()
+    print(data_week)
+
+    dates_week = data_week["daily"]["time"]
+    highs_week = data_week["daily"]["temperature_2m_max"]
+    lows_week = data_week["daily"]["temperature_2m_min"]
+
+    forecast_week = []
+
+    for i_week in range(len(dates_week)):
+        forecast_week.append({
+            "date": dates_week[i_week],
+            "high": highs_week[i_week],
+            "low": lows_week[i_week]
+        })
+
+    forecast_week
+    return
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
     > **Advanced · I · A second API.** Kraken, a cryptocurrency exchange, publishes prices with no key: `https://api.kraken.com/0/public/Ticker?pair=XBTUSD`. Request it, then change the pair to `XBTUSX`. Compare the status code and the reply with Open-Meteo's misspelled search. Both answer 200 to a request that failed, and each shows the failure in its own way.
     """)
+    return
+
+
+@app.cell
+def _(requests):
+    url_good = "https://api.kraken.com/0/public/Ticker?pair=XBTUSD"
+    url_bad = "https://api.kraken.com/0/public/Ticker?pair=XBTUSX"
+
+    response_good = requests.get(url_good)
+    response_bad = requests.get(url_bad)
+
+    print("Correct request:")
+    print(response_good.status_code)
+    print(response_good.json())
+
+    print("Wrong request:")
+    print(response_bad.status_code)
+    print(response_bad.json())
     return
 
 

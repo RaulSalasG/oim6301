@@ -207,6 +207,37 @@ def _(mo):
     return
 
 
+@app.function
+def count_shares(portfolio,n=1):
+    """It returns the total number of shares in a portfolio. """
+    
+    total = 0
+    largest=[]
+    for a in portfolio:
+        i,shares,price=a
+        total += shares
+        if len(largest) < n:
+            largest.append(a)
+        else:
+            for l in largest:
+                if price*shares > l[1]*l[2]:
+                    l=a
+        largest.sort()
+    return total,largest
+
+
+@app.cell
+def _(holdings):
+    print(count_shares(holdings,3))
+    return
+
+
+@app.cell
+def _(retirement_holdings):
+    print(count_shares(retirement_holdings))
+    return
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
@@ -214,6 +245,31 @@ def _(mo):
 
     Copy `count_shares` into a new cell under a new name, and put `print(...)` where the `return` was. Call it and keep the result in a name. In a markdown cell under it, answer: what does that name hold, and what could the next cell do with it?
     """)
+    return
+
+
+@app.function
+def print_count_shares(portfolio,n=1):
+    """It returns the total number of shares in a portfolio. """
+    
+    total = 0
+    largest=[]
+    for a in portfolio:
+        i,shares,price=a
+        total += shares
+        if len(largest) < n:
+            largest.append(a)
+        else:
+            for l in largest:
+                if price*shares > l[1]*l[2]:
+                    l=a
+        largest.sort()
+    print(total,largest)
+
+
+@app.cell
+def _(holdings):
+    print_count_shares(holdings,3)
     return
 
 
