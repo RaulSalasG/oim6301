@@ -216,7 +216,38 @@ def _(towns_from_file):
     count
     #suma valores numericos de un diccionario
     print(sum(count.values()))
-        
+    
+    return
+
+
+@app.cell
+def _(towns_from_file):
+    lowP=1000000000
+    highP=0
+    for t in towns_from_file:
+        if int(t['population']) < lowP:
+            lowP = int(t['population'])
+            lowP_town=t['name']
+        if int(t['population']) > highP:
+            highP = int(t['population'])
+            highP_town=t['name']
+    print(f'Lowest population:{lowP_town} with {lowP}')
+    print(f'Highest population: {highP_town} with {highP}')
+    
+    return
+
+
+@app.cell
+def _(towns_from_file):
+    highValue = {}
+    highTown = {}
+    for t1 in towns_from_file:
+        value = float(t1['average_single_family_value_dollars'])
+        county = t1['county']
+        if value > highValue.get(county, 0):
+            highValue[county] = value
+            highTown[county] = t1['name']
+    highTown
     return
 
 
