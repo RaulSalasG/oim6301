@@ -530,7 +530,6 @@ def _(holdings):
     for _symbol, _shares, _price in holdings:
         cost+= _shares * _price
     print(f"Total cost: {cost}")
-
     return
 
 

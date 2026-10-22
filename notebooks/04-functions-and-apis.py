@@ -60,26 +60,6 @@ def _(mo):
     return
 
 
-@app.cell
-def _():
-    return
-
-
-@app.cell
-def _():
-    return
-
-
-@app.cell
-def _():
-    return
-
-
-@app.cell
-def _():
-    return
-
-
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
@@ -410,13 +390,42 @@ def _(mo):
 
 @app.cell
 def _(requests):
-    wellesley_reply = requests.get(
-        "https://geocoding-api.open-meteo.com/v1/search?name=Wellesley&count=1",
+    def temp_lat(lat,long):
+        forecast_reply = requests.get(
+        "https://api.open-meteo.com/v1/forecast",
+        params={"latitude": lat, "longitude": long, "current": "temperature_2m", "temperature_unit": "fahrenheit"},
         timeout=10,
-    )
-    wellesley_place = wellesley_reply.json()["results"][0]
-    print(wellesley_place)
-    wellesley_place["latitude"], wellesley_place["longitude"], wellesley_place["admin1"]
+        )
+        forecast = forecast_reply.json()
+        return forecast["current"]["temperature_2m"]
+
+    return (temp_lat,)
+
+
+@app.cell
+def _(requests, temp_lat):
+    def get_temperature(town,state):
+        geo_reply = requests.get(
+        "https://geocoding-api.open-meteo.com/v1/search",
+        params={"name": town},
+        timeout=10,
+        )
+        results = geo_reply.json()["results"]
+        for place in results:
+            if place["admin1"]==state:
+                temp=temp_lat(place["latitude"],place["longitude"])
+                return temp
+    
+
+    return (get_temperature,)
+
+
+@app.cell
+def _(get_temperature):
+    town_try="Wellesley"
+    state_try="Massachusetts"
+    temp_f=get_temperature(town_try,state_try)
+    print(f"The temperature in {town_try} is {temp_f}°F")
     return
 
 
@@ -429,6 +438,17 @@ def _(mo):
 
     *Check yourself: Dover, Wellesley, Cohasset, Needham, Westwood.*
     """)
+    return
+
+
+@app.cell
+def _(requests):
+    town_reply = requests.get(
+        "https://oim.zhili.dev/ma/towns",
+        timeout=10, params={"county":"Norfolk", "sort":"income","per_page":5,"order":"desc"}
+    )
+    town1 = town_reply.json()
+    town1
     return
 
 
@@ -448,6 +468,70 @@ def _(mo):
     return
 
 
+@app.cell
+def _(requests):
+    town_reply1 = requests.get(
+        "https://oim.zhili.dev/ma/towns",
+        timeout=10, params={"name":"Wellesley"}
+    )
+    town2 = town_reply1.json()['items']
+    dor_code=town2[0]["dor_code"]
+    dor_code
+    
+    return (dor_code,)
+
+
+@app.cell
+def _(dor_code, requests):
+    town_reply2 = requests.get(
+        f'https://oim.zhili.dev/ma/towns/{dor_code}/history',
+        timeout=10
+    )
+    town3 = town_reply2.json()
+    for t1 in town3['years']:
+        if t1['fiscal_year']==2026:
+            t_final=t1
+            break
+    print(t_final)
+    print(t_final['average_single_family_bill_dollars'])
+    return (t_final,)
+
+
+@app.cell
+def _(t_final):
+    value=t_final["average_single_family_value_dollars"]
+    rate=t_final['residential_rate_per_thousand']
+    print(value*rate/1000)
+    return
+
+
+@app.cell
+def _(requests):
+    def town_history(name):
+        town_reply5 = requests.get(
+            "https://oim.zhili.dev/ma/towns",
+            timeout=10, params={"name":name}
+        )
+        town5 = town_reply5.json()['items']
+        dor_code5=town5[0]["dor_code"]
+    
+        town_reply6 = requests.get(
+            f'https://oim.zhili.dev/ma/towns/{dor_code5}/history',
+            timeout=10
+        )
+        town6 = town_reply6.json()
+        return town6
+    
+
+    return (town_history,)
+
+
+@app.cell
+def _(town_history):
+    town_history("Wellesley")
+    return
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
@@ -462,7 +546,7 @@ def _(mo):
 def _(requests):
     state_first_page = requests.get("https://oim.zhili.dev/ma/towns", timeout=10).json()
     len(state_first_page["items"]), state_first_page["pagination"]
-    return
+    return (state_first_page,)
 
 
 @app.cell(hide_code=True)
@@ -509,7 +593,7 @@ def _(requests):
 
 @app.cell
 def _(get_page):
-    get_page(1)["pagination"]
+    get_page(1)
     return
 
 
@@ -526,6 +610,50 @@ def _(mo):
 
     **Going further.** Which town has the highest average single-family tax bill in the state, and which the lowest?
     """)
+    return
+
+
+@app.cell
+def _(get_page):
+    def get_all_towns():
+        first_page = get_page(1)
+        towns = first_page["items"]
+        pages = first_page["pagination"]["pages"]
+
+        for page in range(2, pages + 1):
+            reply = get_page(page)
+            towns.extend(reply["items"])
+
+        return towns
+
+    all_towns = get_all_towns()
+
+    all_towns
+    return (all_towns,)
+
+
+@app.cell
+def _(all_towns, state_first_page):
+    (len(all_towns) == state_first_page["pagination"]["total"]) 
+    return
+
+
+@app.cell
+def _(all_towns):
+    all_towns[350]
+    return
+
+
+@app.cell
+def _(all_towns):
+    g=0
+    for y in all_towns:
+        if y['average_single_family_value_dollars']>g:
+            g=y['average_single_family_value_dollars']
+            Htown=y['name']
+
+    print(Htown)
+    print(g)
     return
 
 
@@ -579,14 +707,60 @@ def _(mo):
 
 
 @app.cell
-def _(requests):
+def _(town_history):
+    town_name='Norwood'
+    his=town_history(town_name)
+    for h in his['years']:
+        if h['fiscal_year']==2026:
+            h_final=h
+            break
+    town_bill=h_final['average_single_family_bill_dollars']
+    return town_bill, town_name
+
+
+@app.cell
+def _(requests, town_bill, town_name):
     board_reply = requests.post(
+        "https://oim.zhili.dev/message",
+        headers={"x-token": "RaulSalasG"},
+        json={"message": f"{town_name}: ${town_bill:,}"},
+        timeout=10,
+    )
+    board_reply.status_code, board_reply.json()
+    return
+
+
+@app.cell
+def _(requests, town_bill, town_name):
+    board_reply1 = requests.post(
+        "https://oim.zhili.dev/message",
+        json={"message": f"{town_name}: ${town_bill:,}"},
+        timeout=10,
+    )
+    board_reply1.status_code, board_reply1.json()
+
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    The server answered 401, with the message Missing x-token header.
+
+    It needs to know who sent a message because the board shows a name next to each line.
+    """)
+    return
+
+
+@app.cell
+def _(requests):
+    board_reply2 = requests.post(
         "https://oim.zhili.dev/message",
         headers={"x-token": "RaulSalasG"},
         json={"message": f"Hi im Raul"},
         timeout=10,
     )
-    board_reply.status_code, board_reply.json()
+    board_reply2.status_code, board_reply2.json()
     return
 
 
