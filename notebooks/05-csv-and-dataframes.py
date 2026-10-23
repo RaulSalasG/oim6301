@@ -216,7 +216,7 @@ def _(towns_from_file):
     count
     #suma valores numericos de un diccionario
     print(sum(count.values()))
-    
+
     return
 
 
@@ -233,7 +233,7 @@ def _(towns_from_file):
             highP_town=t['name']
     print(f'Lowest population:{lowP_town} with {lowP}')
     print(f'Highest population: {highP_town} with {highP}')
-    
+
     return
 
 
@@ -371,6 +371,40 @@ def _(mo):
     return
 
 
+@app.cell
+def _(ma_counties, pl):
+    pl.DataFrame(ma_counties).sort('towns',descending=True)
+    return
+
+
+@app.cell
+def _(pl, town_table):
+    (
+        town_table.group_by("county")
+        .agg(pl.len().alias("towns"))
+        .sort("towns", descending=True)
+    )
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    yes, both agree
+    """)
+    return
+
+
+@app.cell
+def _(pl, town_table):
+    (
+        town_table.filter(pl.col("population") >= 50_000)
+        .sort("average_single_family_bill_dollars", descending=True)
+        .head(5)
+    )
+    return
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
@@ -414,6 +448,39 @@ def _(mo):
 
     **Going further.** Write a SQL query of your own on `town_table`, and check its answer in polars.
     """)
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md(r"""
+    No county can go up. All can go down or stay the same, because raising the bar is a stricter test (fewer towns pass it).
+    """)
+    return
+
+
+@app.cell
+def _(mo, town_table):
+    towns_over_2m = mo.sql(
+        f"""
+        SELECT county, COUNT(*) AS towns
+        FROM town_table
+        WHERE average_single_family_value_dollars >= 2000000
+        GROUP BY county
+        ORDER BY towns DESC
+        """
+    )
+    return
+
+
+@app.cell
+def _(pl, town_table):
+    (
+        town_table.filter(pl.col("average_single_family_value_dollars") >= 2_000_000)
+        .group_by("county")
+        .agg(pl.len().alias("towns"))
+        .sort("towns", descending=True)
+    )
     return
 
 
@@ -467,6 +534,22 @@ def _(mo):
 
     **Going further.** Color the bars or dots by a column with `color=`, and explain what the colors add.
     """)
+    return
+
+
+@app.cell
+def _(alt, mo, pl, town_table):
+    bill_by_county = town_table.group_by("county").agg(
+        pl.col("average_single_family_bill_dollars").mean().alias("average_bill")
+    )
+
+    bill_chart = mo.ui.altair_chart(
+        bill_by_county.plot.bar(
+            y=alt.Y("county", sort="-x", title="County"),
+            x=alt.X("average_bill", title="Average single-family tax bill (dollars)"),
+        ).properties(title="Which county pays the most property tax on average?")
+    )
+    bill_chart
     return
 
 
