@@ -396,17 +396,17 @@ def _(mo):
 
     This function takes the attacking move's type and the opponent's damage relations. It returns a multiplier based on how effective the attack is.
 
-    I reviewed the entire function to understand how the multiplier is calculated, especially how weaknesses and resistances affect the result. I also checked how accuracy is used in the final score calculation in the main part of the code.
+    I reviewed the entire function. The line I focused on was `multiplier *= 0.5`, because I wanted to check how a resistance changes the multiplier, especially when the opponent has two types. I also checked how accuracy is used later in the main score calculation.
 
-    **Prediction**
+    **Previous test (seed 7 to 1234)**
 
-    If I change random_seed, I expect the program to generate a different team and opponent. This should also change the best Pokemon and move, because the scores depend on which Pokemon are selected.
+    The opponent changed from Pikachu to Fearow, and the recommendation changed from Exeggcute to Mewtwo with Ice Punch (score: 150). The prediction and result were saved in the same commit, so this did not demonstrate a prediction made before the change.
 
-    **Results after the change**
+    **New prediction (before the change)**
 
-    After changing random_seed from 7 to 1234, the opponent changed from  pikachu to fearow. The recommended Pokemon changed from exeggcute to mewtwo, with Ice Punch and a score of 150.
+    I will change `random_seed` from 1234 to 5678. I expect the selected Pokemon and opponent to change. This may also change the recommended Pokemon and move, but it is not guaranteed.
 
-    This matched  my prediction.
+    I will commit this prediction before changing the seed or running the program again.
     """)
     return
 
