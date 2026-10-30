@@ -85,7 +85,7 @@ def _(mo):
 @app.cell
 def _():
     max_pokemon_id = 151
-    random_seed = 1234
+    random_seed = 5678
     moves_per_pokemon = 4
     max_moves_checked = 12
     return max_moves_checked, max_pokemon_id, moves_per_pokemon, random_seed
@@ -376,7 +376,7 @@ def _(mo):
 
     I reviewed the code to understand how the score was calculated. AI also suggested a way to verify the type effectiveness by calculating it in two different ways: using the defending Pokemon's type and the attacking move's type.
 
-    As shown in section 6, both calculations returned 2, which confirmed that the type multiplier was correct for the selected move.
+    As shown in section 6, both calculations returned 1, which confirmed that the type multiplier was correct for the selected move.
     """)
     return
 
@@ -396,7 +396,7 @@ def _(mo):
 
     This function takes the attacking move's type and the opponent's damage relations. It returns a multiplier based on how effective the attack is.
 
-    I reviewed the entire function. The line I focused on was `multiplier *= 0.5`, because I wanted to check how a resistance changes the multiplier, especially when the opponent has two types. I also checked how accuracy is used later in the main score calculation.
+    I reviewed the entire function. The line I focused on was multiplier *= 0.5 because I wanted to check how a resistance changes the multiplier, especially when the opponent has two types. I also checked how accuracy is used later in the main score calculation.
 
     **Previous test (seed 7 to 1234)**
 
@@ -406,7 +406,9 @@ def _(mo):
 
     I will change `random_seed` from 1234 to 5678. I expect the selected Pokemon and opponent to change. This may also change the recommended Pokemon and move, but it is not guaranteed.
 
-    I will commit this prediction before changing the seed or running the program again.
+    **Result of the new test**
+
+    After changing the seed to 5678, the opponent was Chansey and the recommended Pokemon was Jolteon, using Last-resort (score: 140.00). This matched my prediction.
     """)
     return
 
@@ -436,7 +438,7 @@ def _(results, winner):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    **What I found:** Arbok's score (135) is close to Mewtwo's (150), with a difference of 15 points. They also use different move types: Poison and Ice.
+    **What I found:** Starmie's score (135) is very close to Jolteon's (140), with a difference of only 5 points. Starmie uses Hyper Beam and Jolteon uses Last Resort. Both attacks are Normal type.
 
     # 10. Time Spent
 

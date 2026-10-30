@@ -1,7 +1,7 @@
 pokemon,pokemon_types,opponent,move,move_type,power,accuracy,effectiveness,stab,score
-chansey,normal,fearow,focus-blast,fighting,120,70,1.0,1,84.0
-nidorina,poison,fearow,poison-sting,poison,15,100,1,1.5,22.5
-ivysaur,grass/poison,fearow,grass-pledge,grass,80,100,0.5,1.5,60.0
-arbok,poison,fearow,sludge-bomb,poison,90,100,1,1.5,135.0
-mewtwo,psychic,fearow,ice-punch,ice,75,100,2,1,150.0
-blastoise,water,fearow,giga-impact,normal,150,90,1,1,135.0
+growlithe,fire,chansey,double-edge,normal,120,100,1,1,120.0
+charmander,fire,chansey,double-edge,normal,120,100,1,1,120.0
+jolteon,electric,chansey,last-resort,normal,140,100,1,1,140.0
+starmie,water/psychic,chansey,hyper-beam,normal,150,90,1,1,135.0
+seaking,water,chansey,ice-beam,ice,90,100,1,1,90.0
+vulpix,fire,chansey,flame-burst,fire,70,100,1,1.5,105.0
