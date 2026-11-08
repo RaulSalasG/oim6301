@@ -1,0 +1,49 @@
+entrant_id,entrant_name,sport,entrant_type,city,formed_on
+1,Boston Falcons Soccer7,Soccer 7,team,Boston,2023-01-05
+2,Cambridge Wolves Soccer7,Soccer 7,team,Cambridge,2024-02-05
+3,Newton Rockets Soccer7,Soccer 7,team,Newton,2025-03-05
+4,Quincy Tigers Soccer7,Soccer 7,team,Quincy,2023-04-05
+5,Brookline Titans Soccer7,Soccer 7,team,Brookline,2024-05-05
+6,Somerville Eagles Soccer7,Soccer 7,team,Somerville,2025-06-05
+7,Waltham Cyclones Soccer7,Soccer 7,team,Waltham,2023-07-05
+8,Needham Panthers Soccer7,Soccer 7,team,Needham,2024-08-05
+9,Wellesley Chargers Soccer7,Soccer 7,team,Wellesley,2025-09-05
+10,Norwood Lions Soccer7,Soccer 7,team,Norwood,2023-10-05
+11,Medford Hawks Soccer7,Soccer 7,team,Medford,2024-01-05
+12,Milton Comets Soccer7,Soccer 7,team,Milton,2025-02-05
+13,Cambridge Falcons Basketball,Basketball,team,Cambridge,2023-01-05
+14,Newton Wolves Basketball,Basketball,team,Newton,2024-02-05
+15,Quincy Rockets Basketball,Basketball,team,Quincy,2025-03-05
+16,Brookline Tigers Basketball,Basketball,team,Brookline,2023-04-05
+17,Somerville Titans Basketball,Basketball,team,Somerville,2024-05-05
+18,Waltham Eagles Basketball,Basketball,team,Waltham,2025-06-05
+19,Needham Cyclones Basketball,Basketball,team,Needham,2023-07-05
+20,Wellesley Panthers Basketball,Basketball,team,Wellesley,2024-08-05
+21,Norwood Chargers Basketball,Basketball,team,Norwood,2025-09-05
+22,Medford Lions Basketball,Basketball,team,Medford,2023-10-05
+23,Milton Hawks Basketball,Basketball,team,Milton,2024-01-05
+24,Boston Comets Basketball,Basketball,team,Boston,2025-02-05
+25,Newton Padel Pair 01,Padel,pair,Newton,2023-01-05
+26,Quincy Padel Pair 02,Padel,pair,Quincy,2024-02-05
+27,Brookline Padel Pair 03,Padel,pair,Brookline,2025-03-05
+28,Somerville Padel Pair 04,Padel,pair,Somerville,2023-04-05
+29,Waltham Padel Pair 05,Padel,pair,Waltham,2024-05-05
+30,Needham Padel Pair 06,Padel,pair,Needham,2025-06-05
+31,Wellesley Padel Pair 07,Padel,pair,Wellesley,2023-07-05
+32,Norwood Padel Pair 08,Padel,pair,Norwood,2024-08-05
+33,Medford Padel Pair 09,Padel,pair,Medford,2025-09-05
+34,Milton Padel Pair 10,Padel,pair,Milton,2023-10-05
+35,Boston Padel Pair 11,Padel,pair,Boston,2024-01-05
+36,Cambridge Padel Pair 12,Padel,pair,Cambridge,2025-02-05
+37,Avery Kim (Singles 01),Tennis,individual,Quincy,2023-01-05
+38,Drew Lopez (Singles 02),Tennis,individual,Brookline,2024-02-05
+39,Hayden Anderson (Singles 03),Tennis,individual,Somerville,2025-03-05
+40,Kai Patel (Singles 04),Tennis,individual,Waltham,2023-04-05
+41,Leo Martin (Singles 05),Tennis,individual,Needham,2024-05-05
+42,Taylor Singh (Singles 06),Tennis,individual,Wellesley,2025-06-05
+43,Jamie Rivera (Singles 07),Tennis,individual,Norwood,2023-07-05
+44,Sam Li (Singles 08),Tennis,individual,Medford,2024-08-05
+45,Logan Perez (Singles 09),Tennis,individual,Milton,2025-09-05
+46,Robin Torres (Singles 10),Tennis,individual,Boston,2023-10-05
+47,Milan Chen (Singles 11),Tennis,individual,Cambridge,2024-01-05
+48,Alex Santos (Singles 12),Tennis,individual,Newton,2025-02-05

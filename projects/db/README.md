@@ -1,10 +1,10 @@
-# ArenaForge Sports | Database Project
+# ArenaForge Sports | Database Project (OIM6301)
 
 ## 1. The Scenario
 
 **Option E — My own domain: a community sports tournament organizer.**
 
-ArenaForge Sports is a fictional company that organizes paid amateur tournaments in soccer 7 (7-a-side soccer), basketball, padel doubles, and tennis singles in the Boston area. It currently keeps participants, registrations, installment payments, match scores, sponsors, venue costs and prize payments in separate spreadsheets. Management wants one database to compare tournament profitability, identify its strongest competitors and detect payment mistakes.
+ArenaForge Sports is a **fictional company** that organizes paid amateur tournaments in **soccer 7 (7-a-side soccer), basketball, padel doubles, and tennis singles** in the Boston area. It currently keeps participants, registrations, installment payments, match scores, sponsors, venue costs and prize payments in separate spreadsheets. Management wants one database to compare tournament profitability, identify its strongest competitors and detect payment mistakes.
 
 **What the business keeps today**
 
@@ -148,15 +148,35 @@ erDiagram
 
 ## 3. What One Row Means
 
-- **entrants:** One row is one team, padel pair or tennis individual that could enter an ArenaForge event.
-- **athletes:** One row is one athlete on one current entrant's roster.
-- **tournaments:** One row is one organized tournament for a single sport.
-- **registrations:** One row is one entrant registering for one tournament and the fee it owes.
-- **registration_payments:** One row is one payment installment towards one registration.
-- **matches:** One row is one scheduled contest between two entrants registered in that tournament.
-- **sponsors:** One row is one potential or active business sponsor.
-- **sponsorships:** One row is one agreement's payment to one tournament from one sponsor.
-- **event_expenses:** One row is one operating expense for one tournament.
-- **prize_payouts:** One row is one paid prize to a ranked entrant in a tournament.
+- **entrants:** Each row represents a team, a padel pair, or a tennis player.
+- **athletes:** Each row represents one player and the team or pair they belong to.
+- **tournaments:** Each row represents one tournament organized by the company.
+- **registrations:** Each row represents a team or player signing up for a tournament.
+- **registration_payments:** Each row represents one payment for a registration.
+- **matches:** Each row represents one match between two participants.
+- **sponsors:** Each row represents one company that can sponsor tournaments.
+- **sponsorships:** Each row represents one sponsorship for a tournament.
+- **event_expenses:** Each row represents one expense related to a tournament.
+- **prize_payouts:** Each row represents one prize payment to a participant.
+
 
 ## 4. Design Choices
+
+**Key choice:** I decided to use numeric IDs instead of names because names can change. This makes it easier to identify each team, player or sponsor without problems.
+
+**Optional relationships:** Some teams or players may not have registered for any tournament yet. Also, some sponsors may not have sponsored any event.
+
+**Rule a column cannot hold:** A registration can have more than one payment. Because of this, I need to add all the payments together to check if the total is correct. I will use a SQL query to find any differences.
+
+**A design decision I checked:** I wanted to use the same database for all four sports. Since tennis is played individually, padel in pairs, and soccer and basketball in teams, I checked that the tables could work for all of them. This way, I don't need different registration tables for each sport.
+
+### Generated data and intentional errors
+
+- 24 tournaments: 6 per sport. Each has 20 matches, so 480 matches overall.
+- 48 entrants: 12 per sport, including 4 entrants with no registrations. 180 athletes: 84 soccer, 60 basketball, 24 padel and 12 tennis.
+- 16 fictional sponsors, of which exactly 2 have no deals.
+- **Exactly two incorrect payment totals**, deliberately generated for Question 7: `registration_id = 11` is **$17 underpaid**; `registration_id = 107` is **$20 overpaid**. All payment rows individually satisfy `amount > 0`.
+- The generated examples for tennis are singles (best of three sets) and padel is doubles (best of three sets). Basketball scores are points, soccer 7 scores are goals; this is noted so users do not compare raw scores across sports.
+- Amounts are shown in USD. `spectators` estimates on-site attendance per match; it is synthetic, not measured.
+
+

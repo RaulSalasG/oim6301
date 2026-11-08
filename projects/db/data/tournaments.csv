@@ -1,0 +1,25 @@
+tournament_id,tournament_name,sport,start_date,end_date,venue_type,entry_fee,prize_pool,event_budget
+1,ArenaForge Soccer 7 Open 2025-11-1,Soccer 7,2025-11-10,2025-11-13,outdoor,180.00,1800.00,8500.00
+2,ArenaForge Basketball Open 2025-11-2,Basketball,2025-11-22,2025-11-25,indoor,190.00,1750.00,7000.00
+3,ArenaForge Padel Open 2025-12-1,Padel,2025-12-10,2025-12-13,sports_center,75.00,650.00,4200.00
+4,ArenaForge Tennis Open 2025-12-2,Tennis,2025-12-22,2025-12-25,sports_center,35.00,550.00,3900.00
+5,ArenaForge Soccer 7 Open 2026-01-1,Soccer 7,2026-01-10,2026-01-13,outdoor,200.00,1500.00,6500.00
+6,ArenaForge Basketball Open 2026-01-2,Basketball,2026-01-22,2026-01-25,indoor,160.00,1400.00,7000.00
+7,ArenaForge Padel Open 2026-02-1,Padel,2026-02-10,2026-02-13,sports_center,75.00,800.00,4900.00
+8,ArenaForge Tennis Open 2026-02-2,Tennis,2026-02-22,2026-02-25,sports_center,35.00,700.00,3900.00
+9,ArenaForge Soccer 7 Open 2026-03-1,Soccer 7,2026-03-10,2026-03-13,outdoor,180.00,1800.00,7500.00
+10,ArenaForge Basketball Open 2026-03-2,Basketball,2026-03-22,2026-03-25,indoor,160.00,1100.00,6000.00
+11,ArenaForge Padel Open 2026-04-1,Padel,2026-04-10,2026-04-13,sports_center,75.00,650.00,4200.00
+12,ArenaForge Tennis Open 2026-04-2,Tennis,2026-04-22,2026-04-25,sports_center,60.00,700.00,3200.00
+13,ArenaForge Soccer 7 Open 2026-05-1,Soccer 7,2026-05-10,2026-05-13,outdoor,220.00,1500.00,7500.00
+14,ArenaForge Basketball Open 2026-05-2,Basketball,2026-05-22,2026-05-25,indoor,190.00,1100.00,8000.00
+15,ArenaForge Padel Open 2026-06-1,Padel,2026-06-10,2026-06-13,sports_center,75.00,800.00,4200.00
+16,ArenaForge Tennis Open 2026-06-2,Tennis,2026-06-22,2026-06-25,sports_center,35.00,400.00,3200.00
+17,ArenaForge Soccer 7 Open 2026-07-1,Soccer 7,2026-07-10,2026-07-13,outdoor,220.00,1200.00,8500.00
+18,ArenaForge Basketball Open 2026-07-2,Basketball,2026-07-22,2026-07-25,indoor,160.00,1750.00,6000.00
+19,ArenaForge Padel Open 2026-08-1,Padel,2026-08-10,2026-08-13,sports_center,75.00,800.00,4200.00
+20,ArenaForge Tennis Open 2026-08-2,Tennis,2026-08-22,2026-08-25,sports_center,45.00,400.00,3900.00
+21,ArenaForge Soccer 7 Open 2026-09-1,Soccer 7,2026-09-10,2026-09-13,outdoor,200.00,1500.00,6500.00
+22,ArenaForge Basketball Open 2026-09-2,Basketball,2026-09-22,2026-09-25,indoor,190.00,1400.00,7000.00
+23,ArenaForge Padel Open 2026-10-1,Padel,2026-10-10,2026-10-13,sports_center,90.00,500.00,3600.00
+24,ArenaForge Tennis Open 2026-10-2,Tennis,2026-10-22,2026-10-25,sports_center,60.00,400.00,4500.00
