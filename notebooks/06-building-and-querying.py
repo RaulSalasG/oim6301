@@ -218,6 +218,24 @@ def _(mo):
     return
 
 
+@app.cell
+def _(ask, database, duckdb):
+    with duckdb.connect(database) as _con:
+        _con.execute("""
+            CREATE TABLE town_bills (
+                town                                VARCHAR NOT NULL REFERENCES towns(name),
+                fiscal_year                         INTEGER NOT NULL,
+                average_single_family_bill_dollars  INTEGER,
+                PRIMARY KEY (town, fiscal_year)
+            )
+        """)
+        _con.execute("INSERT INTO town_bills VALUES ('Wellesley', 1988, 3129)")
+        _con.execute("INSERT INTO town_bills VALUES ('Wellesley', 1989, 3228)")
+
+    ask("SELECT * FROM town_bills")
+    return
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
@@ -251,6 +269,33 @@ def _(mo):
 
     **Going further.** Find a rule the scenario of your database project states that a constraint cannot hold, and write the query that checks it instead.
     """)
+    return
+
+
+@app.cell
+def _(database, duckdb):
+    try:
+        with duckdb.connect(database) as _con:
+            _con.execute("INSERT INTO towns VALUES ('Wellesley', 'Norfolk', 100, 50000, 5000)")
+        duplicate_name = "accepted"
+    except duckdb.ConstraintException as _error:
+        duplicate_name = str(_error).splitlines()[0]
+
+    try:
+        with duckdb.connect(database) as _con:
+            _con.execute("INSERT INTO towns VALUES ('Testville', 'Suffolk', 0, 50000, 5000)")
+        zero_population = "accepted"
+    except duckdb.ConstraintException as _error:
+        zero_population = str(_error).splitlines()[0]
+
+    try:
+        with duckdb.connect(database) as _con:
+            _con.execute("INSERT INTO towns VALUES ('Somewhere', 'Atlantis', 100, 50000, 5000)")
+        bad_county = "accepted"
+    except duckdb.ConstraintException as _error:
+        bad_county = str(_error).splitlines()[0]
+
+    duplicate_name, zero_population, bad_county
     return
 
 
