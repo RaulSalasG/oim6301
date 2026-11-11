@@ -9,5 +9,7 @@ dependencies = [
     "marimo[recommended]>=0.24.2",
     "matplotlib>=3.11.2",
     "pandas>=3.0.6",
+    "pymssql==2.4.5",
+    "python-dotenv>=1.2.4",
     "requests>=2.34.2",
 ]
